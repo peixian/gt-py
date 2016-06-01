@@ -15,9 +15,17 @@ class GTPY(object):
     
     def _param_encode(self, params):
         """docstring for _param_encode"""
+        _id = None
+        if type(params) == int:
+            _id = params
+            return _id
+        else:
+            _id = params.get("id")
+            if _id:
+                _params = params.pop("id")
         
-        _params = urllib.urlencode(params)
-        _params = "?" + _params
+        _params = "?" + urllib.parse.urlencode(params) if any(params) == True else ""
+        _params = _id + _params if _id else _params
         return _params
 
     def _call(self, params):
