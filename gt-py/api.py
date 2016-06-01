@@ -10,72 +10,51 @@ import requests
 import urllib
 
 API_BASE = "https://www.govtrack.us/api/v2"
-
+VALID_ENDPOINTS = ["bill", "cosponsership", "person", "role", "vote", "vote_voter", "committee", "committe_member"]
 class GTPY(object):
     
-    def _param_encode(self):
+    def _param_encode(self, params):
         """docstring for _param_encode"""
-    pass
-    
+        
+        _params = urllib.urlencode(params)
+        _params = "?" + _params
+        return _params
+
     def _call(self, params):
         """docstring for _call"""
         url = API_BASE + params
         response = requests.get(url).content
         return response.json()
     
-    def bill(self, params, obj_only = False):
+    def get(self, endpoint, params, obj_only):
         """
-        returns JSON object for a bill or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_bill
+        calls the passed endpoint, returns a JSON object or a list if obj_only is true
         """
-        data = self._call("bill/" + self._param_encode(self))
+        endpoint += "/"
+        data = self._call(endpoint + self._param_encode(self))
         return data["objects"] if obj_only else data
         
+    
+    def bill(self, params, obj_only = False):
+        return self.get("bill", params, obj_only)
+        
     def cosponsership(self, params, obj_only = False):
-        """
-        returns JSON object for a cosponsership or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_cosponsorship
-        """
-    pass
+        return self.get("cosponsership", params, obj_only)
     
     def person(self, params, obj_only = False):
-        """
-        returns JSON object for a person or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_person
-        """
-    pass
+        return self.get("person", params, obj_only)
     
     def role(self, params, obj_only = False):
-        """
-        returns JSON object for a role or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_role
-        """
-    pass
+        return self.get("role", params, obj_only)
     
     def vote(self, params, obj_only = False):
-        """
-        returns JSON object for a vote or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_vote
-        """
-    pass
-    
-    def voter_voter(self, params, obj_only = False):
-        """
-        returns JSON object for a voter or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_voter
-        """
-    pass
-    
+        return self.get("vote", params, obj_only)
+        
+    def vote_voter(self, params, obj_only = False):
+        return self.get("vote_voter", params, obj_only)
+        
     def committee(self, params, obj_only = False):
-        """
-        returns JSON object for a committee or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_committee
-        """
-    pass
+        return self.get("committee", params, obj_only)
     
     def committee_member(self, params, obj_only = False):
-        """
-        returns JSON object for a committee_member or a list if obj_only is set to true
-        format: https://www.govtrack.us/developers/api#endpoint_committee_member
-        """
-    pass
+        return self.get("committe_member", params, obj_only)
