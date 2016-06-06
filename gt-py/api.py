@@ -9,7 +9,7 @@ import json
 import requests
 import urllib
 
-API_BASE = "https://www.govtrack.us/api/v2"
+API_BASE = "https://www.govtrack.us/api/v2/"
 VALID_ENDPOINTS = ["bill", "cosponsership", "person", "role", "vote", "vote_voter", "committee", "committe_member"]
 class GTPY(object):
     
@@ -31,7 +31,7 @@ class GTPY(object):
     def _call(self, params):
         """docstring for _call"""
         url = API_BASE + params
-        response = requests.get(url).content
+        response = requests.get(url)
         return response.json()
     
     def get(self, endpoint, params, obj_only):
@@ -39,7 +39,7 @@ class GTPY(object):
         calls the passed endpoint, returns a JSON object or a list if obj_only is true
         """
         endpoint += "/"
-        data = self._call(endpoint + self._param_encode(self))
+        data = self._call(endpoint + str(self._param_encode(params)))
         return data["objects"] if obj_only else data
         
     
