@@ -14,16 +14,16 @@ VALID_ENDPOINTS = ["bill", "cosponsership", "person", "role", "vote", "vote_vote
 class GTPY(object):
     
     def _param_encode(self, params):
-        """docstring for _param_encode"""
+        """Checks if the parameters is just the id, if it is, pass it down. Otherwise pop out the id and parse accordingly"""
         _id = None
         if type(params) == int:
             _id = params
             return _id
         else:
+            params = {k: self._jsonify(v) for k, v in params.items()}
             _id = params.get("id")
             if _id:
                 _params = params.pop("id")
-        
         _params = "?" + urllib.parse.urlencode(params) if any(params) == True else ""
         _params = _id + _params if _id else _params
         return _params
@@ -31,6 +31,7 @@ class GTPY(object):
     def _call(self, params):
         """docstring for _call"""
         url = API_BASE + params
+        print(url)
         response = requests.get(url)
         return response.json()
     
@@ -42,7 +43,15 @@ class GTPY(object):
         data = self._call(endpoint + str(self._param_encode(params)))
         return data["objects"] if obj_only else data
         
-    
+    def _jsonify(self, val):
+        """Transforms python True/False into json strings, there's probably a fucntion for this already built somewhere"""
+        if val == True:
+            return "true"
+        elif val == False:
+            return "false"
+        else:
+            return val
+
     def bill(self, params, obj_only = False):
         return self.get("bill", params, obj_only)
         

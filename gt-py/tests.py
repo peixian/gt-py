@@ -22,6 +22,16 @@ class GTPYTests(TestCase):
         encode_test = self.client._param_encode(test_params)
         self.assertEqual(encode_test, "40054?lastname=Kennedy")
     
+    def test_role(self):
+        """Tests for the role"""
+        TEST_ROLE_STATUS = True
+        TEST_ROLE_LIMIT = 50
+        test_params = {"current": TEST_ROLE_STATUS, "limit": TEST_ROLE_LIMIT}
+        response = self.client.role(test_params)
+        print(response["meta"]["limit"])
+        self.assertEqual(response["meta"]["limit"], TEST_ROLE_LIMIT)
+        self.assertEqual(response["objects"][0]["current"], TEST_ROLE_STATUS)
+    
     def test_person(self):
         """Tests for person"""
         
