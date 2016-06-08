@@ -55,8 +55,8 @@ class GTPY(object):
     def bill(self, params, obj_only = False):
         return self.get("bill", params, obj_only)
         
-    def cosponsership(self, params, obj_only = False):
-        return self.get("cosponsership", params, obj_only)
+    def cosponsorship(self, params, obj_only = False):
+        return self.get("cosponsorship", params, obj_only)
     
     def person(self, params, obj_only = False):
         return self.get("person", params, obj_only)
