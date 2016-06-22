@@ -70,8 +70,8 @@ class GTPY(object):
     def vote_voter(self, params, obj_only = False):
         return self.get("vote_voter", params, obj_only)
         
-    def committee(self, params, obj_only = False):
-        return self.get("committee", params, obj_only)
+    def committee(self, params):
+        return self.get("committee", params, False)
     
     def committee_member(self, params, obj_only = False):
-        return self.get("committe_member", params, obj_only)
+        return self.get("committee_member", params, obj_only)

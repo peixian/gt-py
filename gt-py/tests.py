@@ -58,7 +58,7 @@ class GTPYTests(TestCase):
         self.assertEqual(response["id"], TEST_BILL_ID)
         
     def test_vote(self):
-        """docstring for test_vote"""
+        """Tests the votes by calling vote ID 1"""
         
         TEST_VOTE_ID = 1
         response = self.client.vote(TEST_VOTE_ID)
@@ -75,13 +75,28 @@ class GTPYTests(TestCase):
         
     
     def test_vote_voter(self):
-        """docstring for test_vote_voter"""
-    pass
+        """Tests by finding Mark Kirk's voting record"""
+        TEST_VOTER_PERSON_ID = 400222
+        
+        response = self.client.vote_voter({"person": TEST_VOTER_PERSON_ID}, True)
+        self.assertEqual(response[0]["person"]["firstname"], "Mark")
     
-    def test_comittee(self):
-        """docstring for test_comittee"""
-    pass
+    def test_committee(self):
+        """Tests by searching for the Senate Judicaiary comittee"""
+        TEST_COMMITTEE_ID = 2650
+        
+        response = self.client.committee(TEST_COMMITTEE_ID)
+        self.assertEqual(response["abbrev"], "Judiciary")
+        self.assertEqual(response["committee_type"], "senate")
     
     def test_committee_memember(self):
-        """docstring for test_committee_memember"""
-    pass
+        """Tests by getting Ralph Abraham, then committee 2703"""
+        TEST_COMMITTEE_MEMBER_ID = 204199
+        
+        response = self.client.committee_member(TEST_COMMITTEE_MEMBER_ID)
+        self.assertEqual(response["person"]["firstname"], "Ralph")
+        
+        TEST_COMMITTEE_ID = "2703"
+        
+        response = self.client.committee_member({"committee": TEST_COMMITTEE_ID}, True)
+        self.assertEqual(response[0]["committee"]["code"], "HSIF")
