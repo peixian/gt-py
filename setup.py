@@ -9,6 +9,7 @@ setup(
     packages=['gt-py'],
     install_requires=['unittest2==1.1.0', 'requests==2.9.1'],
     version='1.0',
+    license='MIT',
     description='Python library for GovTrack.us API',
     author='Peixian Wang',
     author_email='peixian@driftingicebergs.com',
