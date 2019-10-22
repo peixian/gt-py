@@ -7,7 +7,7 @@ def readme():
 setup(
     name='gt-py',
     packages=['gtpy'],
-    install_requires=['unittest2==1.1.0', 'requests==2.9.1'],
+    install_requires=['unittest2==1.1.0', 'requests==2.20.0'],
     version='1.2',
     license='MIT',
     description='Python library for GovTrack.us API',
